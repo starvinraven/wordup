@@ -86,28 +86,27 @@
         (if (= this-letter letter) [x y] nil))))))
 
 (defn contains-word?
-    [board word]
-    (let [innerloop
-      (fn innerloop [board word i allowed-cells used-cells]
-        (let [letter (nth word i)
-              cells-with-letter (cells-for-letter board letter)
-              usable-cells-with-letter (set/intersection allowed-cells (set/difference cells-with-letter used-cells))]
-          (if (empty? usable-cells-with-letter)
-            false
-            (if (= i (dec (count word)))
-              true
-              (some true? (for [cell-to-check usable-cells-with-letter]
-                              (innerloop board word (inc i) (neighboring-cells board cell-to-check) (conj used-cells cell-to-check))))))))]
-      (innerloop board word 0 (set (keys (board-to-map board))) #{})))
+  [board word]
+  (let [innerloop
+    (fn innerloop [board word i allowed-cells used-cells]
+      (let [letter (nth word i)
+            cells-with-letter (cells-for-letter board letter)
+            usable-cells-with-letter (set/intersection allowed-cells (set/difference cells-with-letter used-cells))]
+        (if (empty? usable-cells-with-letter)
+          false
+          (if (= i (dec (count word)))
+            true
+            (some true? (for [cell-to-check usable-cells-with-letter]
+                            (innerloop board word (inc i) (neighboring-cells board cell-to-check) (conj used-cells cell-to-check))))))))]
+    (innerloop board word 0 (set (keys (board-to-map board))) #{})))
 
 (defn all-words-in-board
-  [board]
-  ; TODO
-  )
+  [board words]
+  (sort #(> (count %1) (count %2)) (filter #(contains-word? board %) @words)))
 
 (defn print-board!
   [board]
-  (print (str-board board)))
+  (println (str-board board)))
 
 ; (ns wordup.logic.board)
 ; (use 'wordup.logic.dict)
