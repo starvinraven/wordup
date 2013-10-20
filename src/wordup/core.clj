@@ -13,27 +13,16 @@
   (log-config/set-logger!)
   (log/info "logging initialized"))
 
-(defn init-round
-  []
-  (log/info "initializing round...")
-  (let [round-data (round/setup-round! 4 4)
-        current-board (:board round-data)
-        words-in-board (:words-in-board round-data)
-        top-words (take 100 words-in-board)]
-    (log/info (str "init complete, round id " (:id round-data) ", " (:num-words-in-board round-data) " words in board"))
-    (board/log-board! current-board)
-    (log/info top-words)))
-
 (defn init-app
   []
   (init-logging)
-  (init-round))
+  (round/start-round!))
 
-(defn start-server
+(defn start-server!
   []
   (init-app)
   (httpkit/run-server routes/app {:port 3000}))
 
 (defn -main
   [& args]
-  (start-server))
+  (start-server!))

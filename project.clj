@@ -8,7 +8,9 @@
                   [http-kit "2.1.12"]
                   [compojure "1.1.5"]
                   [clj-logging-config "1.9.10"]
-                  [org.clojure/data.json "0.2.3"]]
+                  [org.clojure/data.json "0.2.3"]
+                  [clj-time "0.6.0"]
+                  [overtone/at-at "1.2.0"]]
   :plugins [[lein-ring "0.8.5"]]
   :ring {:handler wordup.web.handlers/app :init wordup.core/init-app}
   :main wordup.core
