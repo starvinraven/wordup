@@ -1,8 +1,20 @@
 (ns wordup.logic.board
-  (:require [clojure.set :as set])
-  (:use [clojure.tools.logging :only (spy)]))
+  (:require [clojure.set :as set]
+            [clojure.tools.logging :as log]))
 
 (def letters-list (map char (concat (range 65 91))))
+
+(def letters-weighed (zipmap letters-list
+                        [9 2 2 4 12 2 3 2 9 1 1 4 2 6 8 2 1 6 4 6 4 2 2 1 2 1]))
+
+(def weighed-letters-list
+  (->> letters-weighed
+    (map #(repeat (val %) (key %)))
+    flatten))
+
+(defn random-weighed-letter
+  []
+  (rand-nth weighed-letters-list))
 
 (defn random-letter
   []
@@ -10,8 +22,7 @@
 
 (defn random-row
   [length]
-  (-> []
-    (into (repeatedly length random-letter))))
+  (into [] (repeatedly length random-weighed-letter)))
 
 (defn board-width
   [board]
@@ -28,8 +39,7 @@
 
 (defn random-board
   [x y]
-  (-> []
-    (into (repeatedly y #(random-row x)))))
+  (into [] (repeatedly y #(random-row x))))
 
 (defn str-board
   [board]
@@ -104,9 +114,9 @@
   [board words]
   (sort #(> (count %1) (count %2)) (filter #(contains-word? board %) @words)))
 
-(defn print-board!
+(defn log-board!
   [board]
-  (println (str-board board)))
+  (log/info (str "\n" (str-board board))))
 
 ; (ns wordup.logic.board)
 ; (use 'wordup.logic.dict)
