@@ -29,7 +29,11 @@
   (init-logging)
   (init-round))
 
-(defn -main
-  [& args]
+(defn start-server
+  []
   (init-app)
   (httpkit/run-server routes/app {:port 3000}))
+
+(defn -main
+  [& args]
+  (start-server))
