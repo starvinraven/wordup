@@ -9,6 +9,6 @@
                   [compojure "1.1.5"]
                   [clj-logging-config "1.9.10"]]
   :plugins [[lein-ring "0.8.5"]]
-  :ring {:handler wordup.web.handlers/app}
+  :ring {:handler wordup.web.handlers/app :init wordup.core/init-app}
   :main wordup.core
   :profiles {:uberjar {:aot :all}})
