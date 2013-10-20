@@ -20,7 +20,7 @@
         current-board (:board round-data)
         words-in-board (:words-in-board round-data)
         top-words (take 100 words-in-board)]
-    (log/info (str "init complete, " (:num-words-in-board round-data) " words in board"))
+    (log/info (str "init complete, round id " (:id round-data) ", " (:num-words-in-board round-data) " words in board"))
     (board/log-board! current-board)
     (log/info top-words)))
 
@@ -31,5 +31,5 @@
 
 (defn -main
   [& args]
-  (init-round)
-  (httpkit/run-server handlers/app) {:port 3000})
+  (init-app)
+  (httpkit/run-server handlers/app {:port 3000}))
