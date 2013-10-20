@@ -2,7 +2,7 @@
   (:gen-class)
   (:require [wordup.gameplay.round :as round]
             [wordup.logic.board :as board]
-            [wordup.web.handlers :as handlers]
+            [wordup.web.routes :as routes]
             [org.httpkit.server :as httpkit]
             [clojure.tools.logging :as log]
             [clj-logging-config.log4j :as log-config]))
@@ -32,4 +32,4 @@
 (defn -main
   [& args]
   (init-app)
-  (httpkit/run-server handlers/app {:port 3000}))
+  (httpkit/run-server routes/app {:port 3000}))
