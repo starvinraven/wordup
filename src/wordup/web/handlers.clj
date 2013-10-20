@@ -4,7 +4,8 @@
   (:use org.httpkit.server)
   (:import (java.io PrintWriter)))
 
-(extend java.lang.Character json/JSONWriter {:-write (fn [x ^PrintWriter out] (.print out (str x)))})
+(extend java.lang.Character json/JSONWriter {:-write (fn [x ^PrintWriter out] (.print out (str "\"" x "\"")))})
+(extend org.joda.time.DateTime json/JSONWriter {:-write (fn [x ^PrintWriter out] (.print out (str "\"" x "\"")))})
 
 (defn on-round-change
   [channel _key _ref old-value new-value]

@@ -43,7 +43,7 @@
        :status :running
        :board board
        :words-in-board words-in-board
-       :num-words-in-board num
+       :num-words-in-board num-words-in-board
        :start-time start-time
        :ends-at end-time
        :duration ROUND_DURATION_SECS})))
