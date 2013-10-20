@@ -8,7 +8,7 @@
 (defn setup-round!
   [board-x board-y]
   (let [board (board/random-board board-x board-y)
-        words (dict/get-words "resources/scrabble.txt")
+        words (dict/get-words "resources/scrabble-short.txt")
         words-in-board (board/all-words-in-board board words)]
     (reset! current-round
       {:id (str (java.util.UUID/randomUUID))
