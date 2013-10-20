@@ -4,6 +4,10 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/tools.logging "0.2.6"]]
+                  [org.clojure/tools.logging "0.2.6"]
+                  [http-kit "2.1.12"]
+                  [compojure "1.1.5"]]
+  :plugins [[lein-ring "0.8.5"]]
+  :ring {:handler wordup.web.handlers/app}
   :main wordup.core
   :profiles {:uberjar {:aot :all}})
