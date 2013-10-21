@@ -1,11 +1,21 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <div id="foo">Hello</div>
-    <div id="board"></div>
-  </body>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script type="text/javascript" src="js/cljs.js"></script>
-  <script type="text/javascript">
-    wordup.cljs.init();
-  </script>
+<head>
+  <title>WORDUP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<h1>Hello, world!</h1>
+
+<div id="board"></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/cljs.js"></script>
+<script type="text/javascript">
+  wordup.cljs.init();
+</script>
+</body>
 </html>
