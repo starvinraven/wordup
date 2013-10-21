@@ -15,7 +15,10 @@
                   [jayq "2.4.0"]
                   [prismatic/dommy "0.1.0"]]
   :plugins [[lein-ring "0.8.5"]
-            [lein-cljsbuild "0.3.4"]]
+            [lein-cljsbuild "0.3.4"]
+            [org.clojars.shishkin/lein-lesscss "1.3.3"]]
+  :lesscss-paths ["resources/less"]
+  :lesscss-output-path "resources/public/css"
   :cljsbuild {:builds [{:source-paths ["src-cljs"],
                         :builds nil,
                         :compiler {:pretty-print true,
