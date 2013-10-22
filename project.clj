@@ -13,7 +13,7 @@
                   [overtone/at-at "1.2.0"]
                   [org.clojure/clojurescript "0.0-1934"]
                   [jayq "2.4.0"]
-                  [prismatic/dommy "0.1.0"]]
+                  [prismatic/dommy "0.1.1"]]
   :plugins [[lein-ring "0.8.5"]
             [lein-cljsbuild "0.3.4"]
             [org.clojars.shishkin/lein-lesscss "1.3.3"]]

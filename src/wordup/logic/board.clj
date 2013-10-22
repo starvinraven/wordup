@@ -7,6 +7,9 @@
 (def letters-weighed (zipmap letters-list
                         [9 2 2 4 12 2 3 2 9 1 1 4 2 6 8 2 1 6 4 6 4 2 2 1 2 1]))
 
+(def letters-points (zipmap letters-list
+                      [1 3 3 2 1 4 2 4 1 8 5 1 3 1 1 3 10 1 1 1 1 4 4 8 4 10]))
+
 (def weighed-letters-list
   (->> letters-weighed
     (map #(repeat (val %) (key %)))
@@ -112,14 +115,13 @@
 
 (defn all-words-in-board
   [board words]
-  (sort #(> (count %1) (count %2)) (filter #(contains-word? board %) @words)))
+  ;(sort #(> (count %1) (count %2)) (filter #(contains-word? board %) @words)))
+  (set (filter #(contains-word? board %) @words)))
 
 (defn log-board!
   [board]
   (log/info (str "\n" (str-board board))))
 
-; (ns wordup.logic.board)
-; (use 'wordup.logic.dict)
-; (load-dict! "resources/words.txt")
-; (contains-word? (partition 4 "PPGRAINENTRAWACH") "PANTAGRAPHIC")
-; (sort #(> (count %1) (count %2)) (filter #(contains-word? (partition 4 "PPGRAINENTRAWACH") %) @words))
+(defn score-word
+  [word]
+  (reduce (fn [acc letter] (+ acc (get letters-points letter))) 0 word))
