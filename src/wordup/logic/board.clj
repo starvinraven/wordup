@@ -113,10 +113,15 @@
                             (innerloop board word (inc i) (neighboring-cells board cell-to-check) (conj used-cells cell-to-check))))))))]
     (innerloop board word 0 (set (keys (board-to-map board))) #{})))
 
+(defn prefilter-words
+  "quick filter words that can be made up of letters in board"
+  [board words]
+  (let [letters-on-board (set (flatten board))]
+    (filter #(clojure.set/subset? (set %) letters-on-board) words)))
+
 (defn all-words-in-board
   [board words]
-  ;(sort #(> (count %1) (count %2)) (filter #(contains-word? board %) @words)))
-  (set (filter #(contains-word? board %) @words)))
+  (set (filter #(contains-word? board %) (prefilter-words board @words))))
 
 (defn log-board!
   [board]
