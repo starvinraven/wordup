@@ -65,6 +65,7 @@
   (log/info "round" round-id (:id @current-round))
   (if (and
         (= (:id @current-round) round-id)
+        (= (:status @current-round) :running)
         (contains? (:words-in-board @current-round) word)
         ((complement contains?) (get-in @current-round [:scores user :used-words]) word))
     (let [score (board/score-word word)]

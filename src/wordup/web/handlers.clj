@@ -26,6 +26,7 @@
 
 (defn round-handler [request]
   (with-channel request channel
+    (log/info "sending " @round/current-round)
     (send! channel (json/write-str @round/current-round))
     ; TODO proper client key instead of request
     (add-watch round/current-round "key" (partial on-round-change channel))

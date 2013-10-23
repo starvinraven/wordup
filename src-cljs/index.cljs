@@ -1,5 +1,5 @@
 (ns wordup.cljs
-  (:use [jayq.core :only [$ html val]]
+  (:use [jayq.core :only [$ html val show hide text]]
         [jayq.util :only [log]]
         [dommy.core :only [replace-contents!]])
   (:use-macros
@@ -37,21 +37,26 @@
   [d]
   (log "round-start")
   (reset-score)
+  (show ($ "#word-input"))
   (reset-round d))
 
 (defn pause-start
   [d]
   (log "pause-start")
+  (hide ($ "#word-input"))
   (reset-round d))
 
 (defn update-score
   [d]
   (let [points-awarded (:points d)
         word (:word d)]
-    (log "update-score" d)
-    (when (> 0 points-awarded)
-      (swap! user-info update-in [:points] #(inc points-awarded %))
-      (swap! user-info update-in [:usedword] conj word))))
+    (log "update-score" d " - " points-awarded)
+    (when (> points-awarded 0)
+      (log "lol?")
+      (swap! user-info update-in [:points] #(+ points-awarded %))
+      (swap! user-info update-in [:usedword] conj word)
+      (log "updated score " (:points @user-info))
+      (text ($ "#points") (:points @user-info)))))
 
 (defn handle-round-msg
   [d]
@@ -68,11 +73,10 @@
 
 (defn submit-word [word]
   (log "submit " word)
-  (.send @round-websocket (to-json-string {:msgtype "word" :word word :round-id (:id @current-round)})))
+  (.send @round-websocket (to-json-string {:msgtype "word" :word (clojure.string/upper-case word) :round-id (:id @current-round)})))
 
 (defn is-enter-or-space? [event]
   (let [keycode (or (aget event "which") (aget event "keyCode"))]
-    (log "keycode" event keycode)
     (= keycode 13)))
 
 (defn setup-input []
@@ -81,6 +85,7 @@
       (.asEventStream "keyup")
       (.filter is-enter-or-space?)
       (.map #(val input-field))
+      (.doAction #(val input-field ""))
       (.onValue submit-word))))
 
 (defn set-username []
