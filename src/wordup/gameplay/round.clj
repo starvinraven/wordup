@@ -26,7 +26,7 @@
   (log/info "start-round!")
   (let [id (str (java.util.UUID/randomUUID))
         board (board/random-board 4 4)
-        words (dict/get-words "resources/scrabble-short.txt")
+        words (dict/get-words "resources/scrabble.txt")
         words-in-board (board/all-words-in-board board words)
         num-words-in-board (count words-in-board)
         start-time (clj-time/now)
@@ -64,12 +64,12 @@
   [word user round-id]
   (log/info "round" round-id (:id @current-round))
   (if (and
-        (log/spy :info (= (:id @current-round) round-id))
-        (log/spy :info (contains? (:words-in-board @current-round) word))
-        (log/spy :info ((complement contains?) (get-in @current-round [:scores user :words]) word)))
+        (= (:id @current-round) round-id)
+        (contains? (:words-in-board @current-round) word)
+        ((complement contains?) (get-in @current-round [:scores user :used-words]) word))
     (let [score (board/score-word word)]
-      (swap! current-round update-in [:scores user :words] #(set (conj % word)))
+      (swap! current-round update-in [:scores user :used-words] #(set (conj % word)))
       (swap! current-round update-in [:scores user :score] #(+ score (or % 0)))
-      (log/info "score for user now" (get-in @current-round [:scores user]))
+      (log/info "awarded " score ", score for user now " (get-in @current-round [:scores user]))
       score)
     0))

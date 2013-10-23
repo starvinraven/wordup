@@ -7,6 +7,7 @@
 
 (def round-websocket (atom nil))
 (def current-round (atom nil))
+(def user-info (atom {:username nil :usedwords #{} :points 0}))
 
 (defn to-json-string [m]
   (.stringify (.-JSON js/window) (clj->js m)))
@@ -28,9 +29,14 @@
     (reset! current-round d)
     (replace-contents! element grid)))
 
+(defn reset-score []
+  (swap! user-info assoc-in [:usedwords] #{})
+  (swap! user-info assoc-in [:points] 0))
+
 (defn round-start
   [d]
   (log "round-start")
+  (reset-score)
   (reset-round d))
 
 (defn pause-start
@@ -40,7 +46,12 @@
 
 (defn update-score
   [d]
-  (log "update-score" d))
+  (let [points-awarded (:points d)
+        word (:word d)]
+    (log "update-score" d)
+    (when (> 0 points-awarded)
+      (swap! user-info update-in [:points] #(inc points-awarded %))
+      (swap! user-info update-in [:usedword] conj word))))
 
 (defn handle-round-msg
   [d]
@@ -72,9 +83,15 @@
       (.map #(val input-field))
       (.onValue submit-word))))
 
+(defn set-username []
+  "FIXME, this can and will clash at some point"
+  (let [username (str "anon" (rand-int 10000000))]
+    (swap! user-info assoc-in [:username] username)))
+
 (defn ^:export init []
   (log "init")
   (setup-input)
+  (set-username)
   (reset! round-websocket (js/WebSocket. "ws://localhost:3000/api/v1/round"))
   (doall
     (map #(aset @round-websocket (first %) (second %))
