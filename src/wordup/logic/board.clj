@@ -130,3 +130,9 @@
 (defn score-word
   [word]
   (reduce (fn [acc letter] (+ acc (get letters-points letter))) 0 word))
+
+(defn words-with-points
+  [words]
+  (sort-by last >
+    (for [word words]
+      [word (score-word word)])))

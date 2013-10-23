@@ -6,8 +6,8 @@
             [overtone.at-at :as at-at]))
 
 (def current-round (atom {:id nil :status :paused :scores {}}))
-(def ROUND_DURATION_SECS 30)
-(def PAUSE_DURATION_SECS 5)
+(def ROUND_DURATION_SECS 120)
+(def PAUSE_DURATION_SECS 40)
 (def thread-pool (at-at/mk-pool))
 
 (defn start-pause!
@@ -28,6 +28,7 @@
         board (board/random-board 4 4)
         words (dict/get-words "resources/scrabble.txt")
         words-in-board (board/all-words-in-board board words)
+        words-in-board-with-points (board/words-with-points words-in-board)
         num-words-in-board (count words-in-board)
         start-time (clj-time/now)
         end-time (clj-time/plus start-time (clj-time/secs ROUND_DURATION_SECS))]
@@ -39,6 +40,7 @@
        :status :running
        :board board
        :words-in-board words-in-board
+       :words-in-board-with-points words-in-board-with-points
        :num-words-in-board num-words-in-board
        :start-time start-time
        :ends-at end-time
@@ -66,6 +68,7 @@
   (if (and
         (= (:id @current-round) round-id)
         (= (:status @current-round) :running)
+        ((complement nil?) user)
         (contains? (:words-in-board @current-round) word)
         ((complement contains?) (get-in @current-round [:scores user :used-words]) word))
     (let [score (board/score-word word)]

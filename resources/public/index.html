@@ -29,55 +29,31 @@
 </nav>
 
 <div class="container">
-<div class="row">
-  <div class="col-xs-12 col-sm-8 col-md-8">
-    <div id="word-grid">
-      <!--
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8">
+      <div id="word-grid"></div>
       <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3">A</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">B</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">C</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">D</div>
+        <input id="word-input" class="form-control input-lg" type="text" placeholder="Type words here!">
       </div>
-      <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3">A</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">B</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">C</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">D</div>
-      </div>
-      <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3">A</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">B</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">C</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">D</div>
-      </div>
-      <div class="row">
-        <div class="col-xs-3 col-sm-3 col-md-3">A</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">B</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">C</div>
-        <div class="col-xs-3 col-sm-3 col-md-3">D</div>
-      </div>
-      -->
     </div>
-    <div class="row">
-      <input id="word-input" class="form-control input-lg" type="text" placeholder="Type words here!">
+    <div class="col-xs-12 col-sm-4 col-md-4">
+      <div id="my-points-container" class="container">
+        <div id="username"></div>
+        <span id="my-points-outer"><span id="points">0</span> points</span>
+      </div>
+      <ul id="used-words" class="word-and-points-list"></ul>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-4 col-md-4">
-    <div id="username"></div>
-    <div id="points">0</div>
-    <ul>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-      <li>word</li>
-    </ul>
+  <div class="row col-xs-12 col-sm-8 col-md-8 hidden results">
+    <ol id="ranking">
+      <li>Foo 12 foo bar zot</li>
+      <li>Bar 11 fs s df s f</li>
+    </ol>
   </div>
-</div>
+  <div class="row col-xs-12 col-sm-4 col-md-4 hidden results">
+    <ol id="words-in-board" class="word-and-points-list">
+    </ol>
+  </div>
 </div>
 
 
