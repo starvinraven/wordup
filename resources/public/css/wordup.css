@@ -5,3 +5,22 @@
   line-height: 120px;
   font-size: 70px;
 }
+#word-input {
+  margin-top: 20px;
+}
+#my-points-container {
+  text-align: center;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+#my-points-container #points {
+  font-size: 80px;
+  width: 100px;
+  display: inline-block;
+}
+.word-and-points-list {
+  list-style: none;
+}
+.word-and-points-list li span {
+  padding: 10px;
+}
