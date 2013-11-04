@@ -148,7 +148,12 @@
   (log "init")
   (setup-input)
   (set-username)
-  (reset! round-websocket (js/WebSocket. "ws://localhost:3000/api/v1/round"))
+  (let [location (aget js/window "location")
+        hostname (aget location "hostname")
+        port (aget location "port")
+        socket-url (str "ws://" hostname ":" port "/api/v1/round")]
+    (log "connecting to: " socket-url)
+    (reset! round-websocket (js/WebSocket. socket-url)))
   (doall
     (map #(aset @round-websocket (first %) (second %))
       [["onopen" (fn [] (log "OPEN"))]
